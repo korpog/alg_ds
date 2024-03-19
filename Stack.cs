@@ -5,10 +5,10 @@ class Node
     public int data;
     public Node next;
 
-    public Node(int new_data)
+    public Node(int data)
     {
-        data = new_data;
-        next = null;
+        this.data = data;
+        this.next = null;
     }
 }
 
@@ -18,7 +18,7 @@ class Stack
 
     public Stack()
     {
-        top = null;
+        this.top = null;
     }
 
     public void Push(int data)
@@ -45,6 +45,7 @@ class Stack
             Console.Write(current.data + " ");
             current = current.next;
         }
+        Console.WriteLine();
     }
 }
 
@@ -53,10 +54,11 @@ public class Program
     public static void Main(string[] args)
     {
         Stack newStack = new Stack();
-        newStack.Push(1);
         newStack.Push(5);
+        newStack.ShowStack();
         newStack.Push(10);
         newStack.Push(15);
+        newStack.ShowStack();
         newStack.Pop();
         newStack.ShowStack();
     }
