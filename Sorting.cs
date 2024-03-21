@@ -82,6 +82,26 @@ class Sorting
         return array;
     }
 
+    public static double[] InsertionSort(double[] array)
+    {
+        int arrLen = array.Length;
+
+        for (int i = 1; i < arrLen; i++)
+        {
+            double key = array[i];
+            int j = i - 1;
+
+            while (j >= 0 && array[j] > key)
+            {
+                array[j + 1] = array[j];
+                j = j - 1;
+            }
+            array[j + 1] = key;
+        }
+
+        return array;
+    }
+
     public static void Main(string[] args)
     {
         int[] arr1 = [1, 2, 1, 2, 2, 2, 2, 1, 2, 1, 2, 1, 1, 1, 1, 2, 2, 1];
@@ -90,9 +110,14 @@ class Sorting
 
         int[] sorted1 = CountingSort(arr1);
         int[] sorted2 = RadixSort(arr2);
+        double[] sorted3 = InsertionSort(arr3);
 
-        Console.Write("Counting Sort: " + PrintArray(sorted1));
-        Console.Write("Radix Sort: " + PrintArray(sorted2));
+        Console.Write("Counting Sort: ");
+        PrintArray(sorted1);
+        Console.Write("Radix Sort: ");
+        PrintArray(sorted2);
+        Console.Write("Insertion Sort: ");
+        PrintArray(sorted3);
 
     }
 }
