@@ -13,7 +13,7 @@ class Sorting
 
     public static int GetMaxValue(int[] array)
     {
-        int max = -9999999;
+        int max = Int32.MinValue;
 
         foreach (var value in array)
         {
@@ -59,6 +59,7 @@ class Sorting
         for (int num = 1; maxVal / num > 0; num *= 10)
         {
             var countArray = new int[10];
+            var outputArray = new int[arrLen];
 
             for (int i = 0; i < arrLen; i++)
             {
@@ -66,17 +67,23 @@ class Sorting
                 countArray[digit]++;
             }
 
-            int index = 0;
-
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
-                while (countArray[i] > 0)
-                {
-                    array[index] = i * num;
-                    index++;
-                    countArray[i]--;
-                }
+                countArray[i] += countArray[i - 1];
             }
+
+            for (int i = arrLen - 1; i >= 0; i--)
+            {
+                int digit = (array[i] / num) % 10;
+                outputArray[countArray[digit] - 1] = array[i];
+                countArray[digit]--;
+            }
+
+            for (int i = 0; i < arrLen; i++)
+            {
+                array[i] = outputArray[i];
+            }
+
         }
 
         return array;
