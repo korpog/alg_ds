@@ -5,17 +5,6 @@ class Node:
         self.val = value
 
 
-def insert(root, value):
-    if root is None:
-        return Node(value)
-    else:
-        if root.val < value:
-            root.right = insert(root.right, value)
-        else:
-            root.left = insert(root.left, value)
-    return root
-
-
 def inorder(root):
     if root:
         inorder(root.left)
@@ -38,21 +27,19 @@ def postorder(root):
 
 
 def level_order(root):
-    if root is None:
-        return
+    if root:
+        queue = []
+        queue.append(root)
 
-    queue = []
-    queue.append(root)
+        while (len(queue) > 0):
+            print(queue[0].val, end=' '),
+            node = queue.pop(0)
 
-    while (len(queue) > 0):
-        print(queue[0].val, end=' '),
-        node = queue.pop(0)
+            if node.left is not None:
+                queue.append(node.left)
 
-        if node.left is not None:
-            queue.append(node.left)
-
-        if node.right is not None:
-            queue.append(node.right)
+            if node.right is not None:
+                queue.append(node.right)
 
 
 def search(root, value):
@@ -63,12 +50,23 @@ def search(root, value):
     return search(root.left, value)
 
 
+def insert(root, value):
+    if root is None:
+        return Node(value)
+    else:
+        if root.val < value:
+            root.right = insert(root.right, value)
+        else:
+            root.left = insert(root.left, value)
+    return root
+
+
 def delete(root, value):
     if root is None:
         return root
     if value < root.val:
         root.left = delete(root.left, value)
-    elif (value > root.val):
+    elif value > root.val:
         root.right = delete(root.right, value)
     else:
         if root.left is None:
@@ -76,9 +74,10 @@ def delete(root, value):
         elif root.right is None:
             return root.left
         temp = min_value(root.right)
-        root.value = temp.value
-        root.right = delete(root.right, temp.value)
+        root.val = temp.val
+        root.right = delete(root.right, temp.val)
     return root
+
 
 def min_value(node):
     min = node
@@ -109,4 +108,13 @@ print()
 
 print("Level order: ")
 level_order(r)
+print()
+
+element_exists = search(r, 20) is not None
+print(element_exists)
+
+delete(r, 50)
+
+print("Inorder: ")
+inorder(r)
 print()
